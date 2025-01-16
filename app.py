@@ -18,8 +18,8 @@ app = Flask(__name__)
 app.secret_key = "SUPER_GEHEIM"  # Nur für Demo!
 
 # Lies Username/Passwort aus den Env Vars, fallback auf Hardcoded
-VALID_USERNAME = os.environ.get("AD_SCHEDULER_USERNAME", "admin")
-VALID_PASSWORD = os.environ.get("AD_SCHEDULER_PASSWORD", "secret")
+VALID_USERNAME = os.environ.get("AD_SCHEDULER_USERNAME")
+VALID_PASSWORD = os.environ.get("AD_SCHEDULER_PASSWORD")
 
 CLIENT_ID = os.getenv('CLIENT_ID')
 CLIENT_SECRET = os.getenv('CLIENT_SECRET')
@@ -118,7 +118,9 @@ def login():
     if request.method == "POST":
         username = request.form.get("username")
         password = request.form.get("password")
-        if username == VALID_USERNAME and password == VALID_PASSWORD:
+        if not VALID_USERNAME:
+            return "Kein Nutzer registriert!"
+        elif username == VALID_USERNAME and password == VALID_PASSWORD:
             session["logged_in"] = True
             return redirect(url_for("index"))
         else:
