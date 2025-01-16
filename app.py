@@ -21,6 +21,8 @@ app.secret_key = "SUPER_GEHEIM"  # Nur für Demo!
 VALID_USERNAME = os.environ.get("AD_SCHEDULER_USERNAME")
 VALID_PASSWORD = os.environ.get("AD_SCHEDULER_PASSWORD")
 
+logger.info(VALID_USERNAME)
+
 CLIENT_ID = os.getenv('CLIENT_ID')
 CLIENT_SECRET = os.getenv('CLIENT_SECRET')
 REFRESH_TOKEN = os.getenv('REFRESH_TOKEN')
