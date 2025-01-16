@@ -5,12 +5,14 @@ from datetime import datetime
 from flask import Flask, request, redirect, url_for, render_template, session
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.interval import IntervalTrigger
+import logging
 
-# -------------------------------------------------------
-# Optional: Lade Umgebungsvariablen aus .env (wenn du python-dotenv benutzt)
-# -------------------------------------------------------
-# from dotenv import load_dotenv
-# load_dotenv()
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(name)s - %(message)s"
+)
+logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
 app.secret_key = "SUPER_GEHEIM"  # Nur für Demo!
@@ -86,9 +88,9 @@ def set_campaign_status_batch(access_token, new_state, campaign_ids):
     }
     response = requests.put(url, headers=headers, json=payload)
     if response.status_code == 207:
-        print(f"Successfully updated campaign state to '{new_state}' for {len(campaign_ids)} campaigns.")
+        logger.info(f"Successfully updated campaign state to '{new_state}' for {len(campaign_ids)} campaigns.")
     else:
-        print(f"Failed to update campaign state to '{new_state}': {response.json()}")
+        logger.error(f"Failed to update campaign state to '{new_state}': {response.json()}")
 
 # -------------------------------------------------------
 # Hilfsfunktionen für Schedule
@@ -246,15 +248,10 @@ def check_campaigns():
             CURRENT_STATE["state"] = desired_state
 
 
-# -------------------------------------------------------
-# Scheduler einrichten
-# -------------------------------------------------------
-from apscheduler.schedulers.background import BackgroundScheduler
-
 scheduler = BackgroundScheduler()
 scheduler.add_job(
     func=check_campaigns,
-    trigger=IntervalTrigger(seconds=60),
+    trigger=IntervalTrigger(seconds=5),
     id="check_campaigns",
     name="Check campaigns every minute",
     replace_existing=True
