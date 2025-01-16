@@ -20,10 +20,6 @@ app.secret_key = "SUPER_GEHEIM"  # Nur für Demo!
 # Lies Username/Passwort aus den Env Vars, fallback auf Hardcoded
 VALID_USERNAME = os.getenv("AD_SCHEDULER_USERNAME")
 VALID_PASSWORD = os.getenv("AD_SCHEDULER_PASSWORD")
-print(VALID_USERNAME)
-
-logger.info(f"User: {VALID_USERNAME}")
-logger.info(os.environ)
 
 CLIENT_ID = os.getenv('CLIENT_ID')
 CLIENT_SECRET = os.getenv('CLIENT_SECRET')
