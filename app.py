@@ -257,7 +257,7 @@ def check_campaigns():
 scheduler = BackgroundScheduler()
 scheduler.add_job(
     func=check_campaigns,
-    trigger=IntervalTrigger(seconds=5),
+    trigger=IntervalTrigger(seconds=60),
     id="check_campaigns",
     name="Check campaigns every minute",
     replace_existing=True
