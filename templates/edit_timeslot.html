@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Zeitfenster bearbeiten</title>
+  </head>
+  <body>
+    <h1>Zeitfenster bearbeiten</h1>
+    <p><a href="{{ url_for('edit_schedule') }}">Zurück zu allen Zeitfenstern</a></p>
+
+    <form method="POST">
+      <label>Wochentag: {{ weekday }}</label><br />
+      <label>Startzeit:</label>
+      <input type="text" name="start_time" value="{{ slot.start }}" />
+      <br />
+      <label>Endzeit:</label>
+      <input type="text" name="end_time" value="{{ slot.end }}" />
+      <br />
+      <button type="submit">Aktualisieren</button>
+    </form>
+  </body>
+</html>

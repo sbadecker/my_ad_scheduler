@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Übersicht</title>
+  </head>
+  <body>
+    <h1>Kampagnen-Übersicht</h1>
+    <p>
+      <a href="{{ url_for('logout') }}">Logout</a> |
+      <a href="{{ url_for('edit_schedule') }}">Zeitfenster hinzufügen/löschen</a>
+    </p>
+
+    <h2>Aktueller Zeitplan (für alle Kampagnen)</h2>
+    <ul>
+      {% for weekday, times in schedule.items() %}
+        <li>
+          <strong>{{ weekday }}:</strong>
+          {% for t in times %}
+            [{{ t.start }} - {{ t.end }}]
+          {% endfor %}
+        </li>
+      {% endfor %}
+    </ul>
+  </body>
+</html>
